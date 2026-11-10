@@ -5,46 +5,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#173b68">
 <title>PsykologTest Sverige</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f1f5fa;color:#26364d;font-family:Arial,sans-serif}
 header{background:#173b68;color:white;padding:25px 18px}
-header h1{margin:0;font-size:25px}
+header h1{margin:0;font-size:26px}
 header p{color:#dce8f6}
-main{max-width:900px;margin:22px auto;padding:0 14px}
-.panel{background:white;padding:20px;border-radius:16px;margin-bottom:18px;box-shadow:0 3px 15px #173b6810}
+main{max-width:950px;margin:22px auto;padding:0 14px}
+.panel{background:white;padding:22px;border-radius:18px;margin-bottom:18px;box-shadow:0 4px 18px #173b6810}
 h2{color:#173b68;margin-top:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}
-.test{border:1px solid #e2e9f1;padding:17px;border-radius:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.test{border:1px solid #e2e9f1;padding:18px;border-radius:14px}
+.test h3{font-size:17px}
 .test p{color:#64748b;line-height:1.5}
-button{background:#245b96;color:white;border:0;padding:12px 17px;border-radius:9px;font-size:15px;cursor:pointer}
+button{background:#245b96;color:white;border:0;padding:12px 18px;border-radius:9px;font-size:15px;cursor:pointer}
+button:hover{background:#173b68}
 button.secondary{background:#e8eef6;color:#173b68}
-button:disabled{opacity:.5}
-select,input[type=text]{width:100%;padding:12px;border:1px solid #ccd6e3;border-radius:9px;font-size:16px;background:white}
+select,input[type=text],input[type=number]{width:100%;padding:12px;border:1px solid #ccd6e3;border-radius:9px;font-size:16px;background:white}
 label{display:block;margin:12px 0}
-.question{padding:13px 0;border-bottom:1px solid #edf0f5}
-.question p{font-weight:bold}
 .badge{background:#e8eff9;color:#245b96;border-radius:20px;padding:6px 10px;font-size:12px}
-.result{background:#edf5ff;padding:18px;border-radius:12px;margin-top:16px}
-.big{font-size:32px;color:#173b68;font-weight:bold}
 .hidden{display:none}
-.symbols{font-size:28px;letter-spacing:7px;text-align:center;padding:20px}
+.question{padding:16px 0;border-bottom:1px solid #edf0f5}
+.question p{line-height:1.5}
+.symbols{font-size:30px;letter-spacing:6px;text-align:center;padding:20px 5px;background:#edf5ff;border-radius:12px;margin:15px 0}
+.result{background:#edf5ff;padding:20px;border-radius:14px;margin-top:18px}
+.big{font-size:38px;color:#173b68;font-weight:bold;margin:12px 0}
+.correct{color:#16804a;font-weight:bold}
+.wrong{color:#c43b3b;font-weight:bold}
+.answer-card{padding:14px;background:white;border:1px solid #dce5ef;border-radius:10px;margin:10px 0}
 .memorygrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.memorygrid button{font-size:27px;padding:17px 5px;background:#e8eff9;color:#173b68}
+.memorygrid button{font-size:28px;padding:17px 4px;background:#e8eff9;color:#173b68;min-height:65px}
+.memorygrid button:disabled{background:#d8f2e2}
+.progress{background:#e1eaf5;border-radius:10px;height:9px;overflow:hidden;margin:12px 0}
+.progress div{background:#245b96;height:100%}
 footer{text-align:center;color:#718096;padding:25px;font-size:13px}
+@media(max-width:480px){
+header h1{font-size:22px}
+.panel{padding:17px}
+.big{font-size:32px}
+.memorygrid button{font-size:23px}
+}
+@media print{
+header,.test-library,#agePanel,footer,.no-print{display:none!important}
+body{background:white}
+.panel{box-shadow:none}
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>🧠 PsykologTest Sverige</h1>
-<p>Psykologiska och kognitiva övningar</p>
+<p>Psykologiska och kognitiva testövningar</p>
 </header>
+
 <main>
 
-<section class="panel">
+<section class="panel" id="agePanel">
 <span class="badge">Barn • Ungdomar • Vuxna</span>
 <h2>Välkommen</h2>
-<p>Välj åldersgrupp och genomför olika övningar.</p>
+<p>Välj åldersgrupp för att börja genomföra övningar.</p>
 <label>Åldersgrupp
 <select id="age">
 <option value="">Välj åldersgrupp</option>
@@ -55,39 +77,46 @@ footer{text-align:center;color:#718096;padding:25px;font-size:13px}
 </label>
 </section>
 
-<section class="panel">
+<section class="panel test-library">
 <h2>Testbibliotek</h2>
 <div class="grid">
+
 <div class="test">
 <h3>🧩 Logik och mönster</h3>
-<p>Hitta rätt svar i olika logiska uppgifter.</p>
+<p>Talserier, figurer, pussel och logiskt tänkande.</p>
 <button onclick="startLogic()">Starta test</button>
 </div>
+
 <div class="test">
 <h3>🧠 Minnestest</h3>
-<p>Kom ihåg bilder och hitta matchande kort.</p>
+<p>Bildminne och förmåga att hitta matchande kort.</p>
 <button onclick="startMemory()">Starta test</button>
 </div>
+
 <div class="test">
 <h3>🎯 Koncentration</h3>
-<p>Hitta rätt symbol bland många symboler.</p>
+<p>Hitta symboler och träna uppmärksamhet.</p>
 <button onclick="startAttention()">Starta test</button>
 </div>
+
 <div class="test">
 <h3>🔷 Visuella uppgifter</h3>
-<p>Se mönster och hitta figuren som saknas.</p>
+<p>Figurserier, former och visuella pussel.</p>
 <button onclick="startVisual()">Starta test</button>
 </div>
+
 <div class="test">
 <h3>💭 Mående och välbefinnande</h3>
-<p>Frågor om känslor och välbefinnande.</p>
+<p>Frågeformulär om känslor och välbefinnande.</p>
 <button onclick="startMood()">Starta test</button>
 </div>
+
 <div class="test">
-<h3>📊 Testresultat</h3>
-<p>Se resultaten från dina övningar under denna session.</p>
+<h3>📊 Resultat och rapporter</h3>
+<p>Se tidigare resultat och skriv ut en sammanställning.</p>
 <button onclick="showHistory()">Visa resultat</button>
 </div>
+
 </div>
 </section>
 
@@ -98,168 +127,585 @@ footer{text-align:center;color:#718096;padding:25px;font-size:13px}
 </section>
 
 <section class="panel">
-<h2>Information</h2>
-<p>Detta är en demonstrationsversion med egna övningar. Resultaten är inte validerade kliniska testresultat och kan inte användas för att fastställa IQ, diagnoser eller medicinska tillstånd.</p>
+<h2>Om systemet</h2>
+<p>Detta system innehåller egna demonstrationsövningar. Resultaten visar hur det gick på uppgifterna och är inte validerade kliniska testresultat.</p>
+<p>Systemet kan inte fastställa IQ, ADHD, autism, depression eller andra diagnoser. Kliniska bedömningar kräver lämpliga validerade instrument och behörig professionell bedömning.</p>
 </section>
+
 </main>
+
 <footer>
-PsykologTest Sverige · Version 2.0<br>
-Ingen patientinformation sparas i denna demonstrationsversion.
+PsykologTest Sverige · Version 3.0<br>
+Demonstrationssystem · Svenska
 </footer>
 
 <script>
+
+let history=[];
+let currentTest='';
+let currentAge='';
+
 const work=document.getElementById('work');
 const content=document.getElementById('content');
 const result=document.getElementById('result');
 const title=document.getElementById('title');
-let history=[];
 
 function begin(name){
-if(!document.getElementById('age').value){
+currentAge=document.getElementById('age').value;
+
+if(!currentAge){
 alert('Välj åldersgrupp först.');
+document.getElementById('agePanel').scrollIntoView();
 return false;
 }
+
+currentTest=name;
 work.classList.remove('hidden');
 title.textContent=name;
 content.innerHTML='';
 result.innerHTML='';
 work.scrollIntoView({behavior:'smooth'});
-return true;
-}
 
-function finish(name,score,total,description){
-history.push({name,score,total});
-content.innerHTML='';
-result.innerHTML='<div class="result"><h3>Övningen är klar!</h3><div class="big">'+score+' / '+total+'</div><p>'+description+'</p><p>Detta är ett övningsresultat, inte en klinisk bedömning.</p><button onclick="closeTest()">Tillbaka till testerna</button></div>';
+return true;
 }
 
 function closeTest(){
 work.classList.add('hidden');
+document.querySelector('.test-library').scrollIntoView({behavior:'smooth'});
 }
 
-function startLogic(){
-if(!begin('Logik och mönster'))return;
-let qs=[
-{q:'Vilken siffra kommer härnäst?',p:'2 – 4 – 6 – 8 – ?',o:['9','10','12'],a:'10'},
-{q:'Vilken figur skiljer sig?',p:'○ ○ △ ○',o:['Första','Tredje','Fjärde'],a:'Tredje'},
-{q:'Vilken siffra kommer härnäst?',p:'3 – 6 – 9 – 12 – ?',o:['13','15','18'],a:'15'},
-{q:'Vilken figur passar bäst?',p:'▲ ▼ ▲ ▼ ?',o:['▲','■','●'],a:'▲'},
-{q:'Vilket tal saknas?',p:'1 – 2 – 4 – 8 – ?',o:['10','12','16'],a:'16'}
-];
-let i=0,score=0;
-function draw(){
-let q=qs[i];
-content.innerHTML='<p>Fråga '+(i+1)+' av '+qs.length+'</p><h3>'+q.q+'</h3><div class="symbols">'+q.p+'</div>'+q.o.map(x=>'<label><input type="radio" name="logic" value="'+x+'"> '+x+'</label>').join('')+'<button onclick="logicNext()">Nästa</button>';
-}
-window.logicNext=function(){
-let a=document.querySelector('input[name=logic]:checked');
-if(!a){alert('Välj ett svar.');return}
-if(a.value===qs[i].a)score++;
-i++;
-if(i<qs.length)draw();
-else finish('Logik och mönster',score,qs.length,'Du svarade rätt på '+score+' av '+qs.length+' frågor.');
-};
-draw();
-}
-
-function startMemory(){
-if(!begin('Minnestest'))return;
-let cards=['🍎','🚗','⭐','🐱','🍎','🚗','⭐','🐱'];
-cards.sort(()=>Math.random()-.5);
-let first=null,lock=false,matches=0,tries=0;
-content.innerHTML='<p>Hitta de fyra paren. Tryck på två kort i taget.</p><div class="memorygrid" id="cards"></div><p id="memoryStatus">Hittade par: 0 av 4</p>';
-let area=document.getElementById('cards');
-cards.forEach((symbol,index)=>{
-let b=document.createElement('button');
-b.textContent='?';
-b.dataset.symbol=symbol;
-b.dataset.index=index;
-b.onclick=()=>{
-if(lock||b.textContent!=='?')return;
-b.textContent=symbol;
-if(!first){first=b;return}
-tries++;
-if(first.dataset.symbol===symbol){
-first.disabled=true;b.disabled=true;first=null;matches++;
-document.getElementById('memoryStatus').textContent='Hittade par: '+matches+' av 4';
-if(matches===4)finish('Minnestest',4,4,'Du hittade alla par på '+tries+' försök.');
-}else{
-lock=true;
-let previous=first;first=null;
-setTimeout(()=>{
-previous.textContent='?';b.textContent='?';lock=false;
-},800);
-}
-};
-area.appendChild(b);
+function saveResult(name,score,total,details){
+history.push({
+name:name,
+score:score,
+total:total,
+age:currentAge,
+date:new Date().toLocaleString('sv-SE'),
+details:details
 });
 }
 
-function startAttention(){
-if(!begin('Koncentrationstest'))return;
-let symbols=Array.from({length:36},()=>Math.random()<.25?'★':'●');
-let target=symbols.filter(x=>x==='★').length;
-content.innerHTML='<p>Räkna hur många stjärnor du ser.</p><div class="symbols">'+symbols.join(' ')+'</div><label>Ditt svar<input type="text" id="attentionAnswer" inputmode="numeric"></label><button onclick="checkAttention()">Kontrollera</button>';
-window.checkAttention=function(){
-let v=document.getElementById('attentionAnswer').value.trim();
-if(!/^\d+$/.test(v)){alert('Skriv ett antal.');return}
-let correct=Number(v)===target?1:0;
-finish('Koncentrationstest',correct,1,correct?'Du räknade rätt.':'Rätt antal stjärnor var '+target+'.');
-};
+function showFinal(name,score,total,details){
+saveResult(name,score,total,details);
+
+result.innerHTML=
+'<div class="result">'+
+'<h3>Övningen är klar!</h3>'+
+'<div class="big">'+score+' / '+total+'</div>'+
+'<p>Rätt svar: '+score+' av '+total+'</p>'+
+'<p>Resultatet gäller endast denna övning.</p>'+
+'<button onclick="closeTest()">Tillbaka till testerna</button>'+
+'</div>';
 }
 
-function startVisual(){
-if(!begin('Visuella uppgifter'))return;
-let qs=[
-{q:'Vilken figur saknas?',p:'▲ ■ ▲ ■ ?',o:['▲','●','■'],a:'▲'},
-{q:'Vilken form är annorlunda?',p:'○ ○ ○ □ ○',o:['Första','Fjärde','Femte'],a:'Fjärde'},
-{q:'Vad kommer efter?',p:'◆ ◇ ◆ ◇ ?',o:['◆','○','□'],a:'◆'}
-];
-let i=0,score=0;
-function draw(){
-let q=qs[i];
-content.innerHTML='<p>Uppgift '+(i+1)+' av 3</p><h3>'+q.q+'</h3><div class="symbols">'+q.p+'</div>'+q.o.map(x=>'<label><input type="radio" name="visual" value="'+x+'"> '+x+'</label>').join('')+'<button onclick="visualNext()">Nästa</button>';
+// LOGIKTEST
+
+function startLogic(){
+
+if(!begin('Logik och mönster'))return;
+
+let questions=[
+{
+q:'Vilken siffra kommer härnäst?',
+p:'2 – 4 – 6 – 8 – ?',
+o:['9','10','12'],
+a:'10',
+e:'Talen ökar med 2 varje gång. Efter 8 kommer 10.'
+},
+{
+q:'Vilken figur skiljer sig?',
+p:'○ ○ △ ○',
+o:['Första','Tredje','Fjärde'],
+a:'Tredje',
+e:'Den tredje figuren är en triangel. De andra är cirklar.'
+},
+{
+q:'Vilken siffra kommer härnäst?',
+p:'3 – 6 – 9 – 12 – ?',
+o:['13','15','18'],
+a:'15',
+e:'Talen ökar med 3 varje gång. Nästa tal är 15.'
+},
+{
+q:'Vilken figur passar bäst?',
+p:'▲ ▼ ▲ ▼ ?',
+o:['▲','■','●'],
+a:'▲',
+e:'Figurerna växlar mellan uppåt och nedåt. Nästa figur är ▲.'
+},
+{
+q:'Vilket tal saknas?',
+p:'1 – 2 – 4 – 8 – ?',
+o:['10','12','16'],
+a:'16',
+e:'Varje tal fördubblas. Efter 8 kommer 16.'
+},
+{
+q:'Vilket tal kommer härnäst?',
+p:'5 – 10 – 15 – 20 – ?',
+o:['22','25','30'],
+a:'25',
+e:'Talen ökar med 5. Nästa tal är 25.'
+},
+{
+q:'Vilken figur är annorlunda?',
+p:'□ □ ○ □',
+o:['Första','Tredje','Fjärde'],
+a:'Tredje',
+e:'Den tredje figuren är en cirkel. De övriga är fyrkanter.'
+},
+{
+q:'Vilket tal saknas?',
+p:'10 – 20 – 30 – 40 – ?',
+o:['45','50','60'],
+a:'50',
+e:'Talen ökar med 10. Nästa tal är 50.'
 }
-window.visualNext=function(){
-let a=document.querySelector('input[name=visual]:checked');
-if(!a){alert('Välj ett svar.');return}
-if(a.value===qs[i].a)score++;
+];
+
+let i=0;
+let score=0;
+let answers=[];
+
+function draw(){
+
+let q=questions[i];
+
+content.innerHTML=
+'<p>Fråga '+(i+1)+' av '+questions.length+'</p>'+
+'<div class="progress"><div style="width:'+((i/questions.length)*100)+'%"></div></div>'+
+'<h3>'+q.q+'</h3>'+
+'<div class="symbols">'+q.p+'</div>'+
+q.o.map(x=>
+'<label><input type="radio" name="logic" value="'+x+'"> '+x+'</label>'
+).join('')+
+'<button onclick="logicNext()">'+
+(i===questions.length-1?'Avsluta test':'Nästa fråga')+
+'</button>';
+}
+
+window.logicNext=function(){
+
+let selected=document.querySelector('input[name="logic"]:checked');
+
+if(!selected){
+alert('Välj ett svar först.');
+return;
+}
+
+let q=questions[i];
+let correct=selected.value===q.a;
+
+if(correct)score++;
+
+answers.push({
+question:q.q,
+pattern:q.p,
+selected:selected.value,
+correct:q.a,
+explanation:q.e,
+isCorrect:correct
+});
+
 i++;
-if(i<qs.length)draw();
-else finish('Visuella uppgifter',score,3,'Du svarade rätt på '+score+' av 3 frågor.');
+
+if(i<questions.length){
+draw();
+}else{
+let details=answers.map((a,index)=>'Fråga '+(index+1)+': '+a.selected+' / rätt svar: '+a.correct);
+saveResult('Logik och mönster',score,questions.length,details);
+renderReview('Logik och mönster',score,questions.length,answers);
+}
 };
+
 draw();
 }
 
+// GEMENSAM GENOMGÅNG
+
+function renderReview(name,score,total,answers){
+
+content.innerHTML='<h3>Genomgång av dina svar</h3>'+
+answers.map((a,index)=>
+'<div class="answer-card">'+
+'<h3>Fråga '+(index+1)+'</h3>'+
+'<p>'+a.question+'</p>'+
+(a.pattern?'<div class="symbols">'+a.pattern+'</div>':'')+
+'<p class="'+(a.isCorrect?'correct':'wrong')+'">'+
+(a.isCorrect?'✓ Rätt svar':'✗ Fel svar')+
+'</p>'+
+'<p>Ditt svar: <b>'+a.selected+'</b></p>'+
+'<p>Rätt svar: <b>'+a.correct+'</b></p>'+
+'<p><b>Förklaring:</b> '+a.explanation+'</p>'+
+'</div>'
+).join('');
+
+result.innerHTML=
+'<div class="result">'+
+'<h3>Slutresultat – '+name+'</h3>'+
+'<div class="big">'+score+' / '+total+'</div>'+
+'<p>Du svarade rätt på '+score+' av '+total+' uppgifter.</p>'+
+'<button onclick="window.print()">Skriv ut rapport</button> '+
+'<button onclick="closeTest()">Tillbaka till testerna</button>'+
+'</div>';
+}
+
+// MINNESTEST
+
+function startMemory(){
+
+if(!begin('Minnestest'))return;
+
+let cards=['🍎','🚗','⭐','🐱','🌻','🏠','🍎','🚗','⭐','🐱','🌻','🏠'];
+cards.sort(()=>Math.random()-.5);
+
+let first=null;
+let lock=false;
+let matches=0;
+let attempts=0;
+
+content.innerHTML=
+'<p>Hitta de sex matchande paren. Välj två kort i taget.</p>'+
+'<p id="memoryStatus">Hittade par: 0 av 6</p>'+
+'<div class="memorygrid" id="cards"></div>';
+
+let area=document.getElementById('cards');
+
+cards.forEach((symbol,index)=>{
+
+let button=document.createElement('button');
+button.textContent='?';
+button.dataset.symbol=symbol;
+
+button.onclick=function(){
+
+if(lock||button.disabled||button.textContent!=='?')return;
+
+button.textContent=symbol;
+
+if(!first){
+first=button;
+return;
+}
+
+attempts++;
+
+let previous=first;
+first=null;
+
+if(previous.dataset.symbol===button.dataset.symbol){
+
+previous.disabled=true;
+button.disabled=true;
+matches++;
+
+document.getElementById('memoryStatus').textContent=
+'Hittade par: '+matches+' av 6 · Försök: '+attempts;
+
+if(matches===6){
+let details=['Alla sex bildpar hittades.','Totalt antal försök: '+attempts];
+saveResult('Minnestest',matches,6,details);
+
+content.innerHTML=
+'<h3>Minnesövningen är klar!</h3>'+
+'<p>Alla bildpar hittades.</p>'+
+'<p>Antal försök: '+attempts+'</p>'+
+'<p>Bildparen var: 🍎 🚗 ⭐ 🐱 🌻 🏠</p>';
+
+result.innerHTML=
+'<div class="result">'+
+'<div class="big">6 / 6 par</div>'+
+'<p>Du hittade alla sex par.</p>'+
+'<button onclick="window.print()">Skriv ut rapport</button> '+
+'<button onclick="closeTest()">Tillbaka till testerna</button>'+
+'</div>';
+}
+
+}else{
+
+lock=true;
+
+setTimeout(()=>{
+previous.textContent='?';
+button.textContent='?';
+lock=false;
+
+document.getElementById('memoryStatus').textContent=
+'Hittade par: '+matches+' av 6 · Försök: '+attempts;
+
+},900);
+}
+
+};
+
+area.appendChild(button);
+});
+}
+
+// KONCENTRATIONSTEST
+
+function startAttention(){
+
+if(!begin('Koncentrationstest'))return;
+
+let symbols=Array.from({length:40},()=>
+Math.random()<0.25?'★':'●'
+);
+
+let target=symbols.filter(x=>x==='★').length;
+
+content.innerHTML=
+'<p>Räkna hur många stjärnor du ser i rutan.</p>'+
+'<div class="symbols" style="font-size:23px;line-height:2">'+symbols.join(' ')+'</div>'+
+'<label>Hur många stjärnor såg du?'+
+'<input type="number" id="attentionAnswer" min="0" max="40"></label>'+
+'<button onclick="checkAttention()">Kontrollera svar</button>';
+
+window.checkAttention=function(){
+
+let input=document.getElementById('attentionAnswer');
+let value=input.value.trim();
+
+if(value===''||!Number.isInteger(Number(value))||Number(value)<0||Number(value)>40){
+alert('Skriv ett giltigt antal mellan 0 och 40.');
+return;
+}
+
+let correct=Number(value)===target;
+
+let answers=[{
+question:'Hur många stjärnor fanns i symbolrutan?',
+selected:value,
+correct:String(target),
+explanation:'Det fanns '+target+' stjärnor i rutan.',
+isCorrect:correct
+}];
+
+saveResult('Koncentrationstest',correct?1:0,1,[
+'Ditt svar: '+value,
+'Rätt antal: '+target
+]);
+
+renderReview('Koncentrationstest',correct?1:0,1,answers);
+};
+
+}
+
+// VISUELLA TESTER
+
+function startVisual(){
+
+if(!begin('Visuella uppgifter'))return;
+
+let questions=[
+{
+q:'Vilken figur saknas?',
+p:'▲ ■ ▲ ■ ?',
+o:['▲','●','■'],
+a:'▲',
+e:'Mönstret växlar mellan triangel och fyrkant.'
+},
+{
+q:'Vilken form är annorlunda?',
+p:'○ ○ ○ □ ○',
+o:['Första','Fjärde','Femte'],
+a:'Fjärde',
+e:'Den fjärde figuren är en fyrkant medan de andra är cirklar.'
+},
+{
+q:'Vad kommer efter?',
+p:'◆ ◇ ◆ ◇ ?',
+o:['◆','○','□'],
+a:'◆',
+e:'Figurerna växlar mellan fylld och ofylld diamant.'
+},
+{
+q:'Vilken figur passar?',
+p:'★ ☆ ★ ☆ ?',
+o:['★','●','■'],
+a:'★',
+e:'Mönstret växlar mellan fylld och ofylld stjärna.'
+},
+{
+q:'Vilken figur skiljer sig?',
+p:'▲ ▲ ● ▲ ▲',
+o:['Första','Tredje','Femte'],
+a:'Tredje',
+e:'Den tredje figuren är en cirkel. De andra är trianglar.'
+}
+];
+
+let i=0;
+let score=0;
+let answers=[];
+
+function draw(){
+
+let q=questions[i];
+
+content.innerHTML=
+'<p>Uppgift '+(i+1)+' av '+questions.length+'</p>'+
+'<h3>'+q.q+'</h3>'+
+'<div class="symbols">'+q.p+'</div>'+
+q.o.map(x=>
+'<label><input type="radio" name="visual" value="'+x+'"> '+x+'</label>'
+).join('')+
+'<button onclick="visualNext()">'+
+(i===questions.length-1?'Visa resultat':'Nästa')+
+'</button>';
+}
+
+window.visualNext=function(){
+
+let selected=document.querySelector('input[name="visual"]:checked');
+
+if(!selected){
+alert('Välj ett svar.');
+return;
+}
+
+let q=questions[i];
+let correct=selected.value===q.a;
+
+if(correct)score++;
+
+answers.push({
+question:q.q,
+pattern:q.p,
+selected:selected.value,
+correct:q.a,
+explanation:q.e,
+isCorrect:correct
+});
+
+i++;
+
+if(i<questions.length){
+draw();
+}else{
+saveResult('Visuella uppgifter',score,questions.length,[]);
+renderReview('Visuella uppgifter',score,questions.length,answers);
+}
+};
+
+draw();
+}
+
+// MÅENDE OCH VÄLBEFINNANDE
+
 function startMood(){
+
 if(!begin('Mående och välbefinnande'))return;
-let qs=[
+
+let questions=[
 'Hur ofta har du känt dig stressad?',
 'Hur ofta har du haft svårt att koppla av?',
 'Hur ofta har du känt dig nedstämd?',
 'Hur ofta har du känt dig orolig?',
-'Hur ofta har du känt dig glad?'
+'Hur ofta har du känt dig glad?',
+'Hur ofta har du haft energi att göra saker?',
+'Hur ofta har du känt dig nöjd med din vardag?',
+'Hur ofta har du haft svårt att sova?'
 ];
-content.innerHTML=qs.map((q,i)=>'<div class="question"><p>'+(i+1)+'. '+q+'</p>'+['Aldrig','Ibland','Ofta','Nästan alltid'].map((a,j)=>'<label><input type="radio" name="m'+i+'" value="'+j+'"> '+a+'</label>').join('')+'</div>').join('')+'<button onclick="submitMood()">Visa sammanställning</button>';
+
+let options=[
+'Aldrig',
+'Ibland',
+'Ofta',
+'Nästan alltid'
+];
+
+content.innerHTML=
+'<p>Besvara frågorna utifrån hur du själv upplever ditt mående.</p>'+
+'<p>Det finns inga rätt eller fel svar.</p>'+
+questions.map((q,i)=>
+'<div class="question">'+
+'<p><b>'+(i+1)+'. '+q+'</b></p>'+
+options.map((o,j)=>
+'<label><input type="radio" name="m'+i+'" value="'+j+'"> '+o+'</label>'
+).join('')+
+'</div>'
+).join('')+
+'<button onclick="submitMood()">Visa sammanställning</button>';
+
 window.submitMood=function(){
-let score=0;
-for(let i=0;i<qs.length;i++){
-let a=document.querySelector('input[name=m'+i+']:checked');
-if(!a){alert('Besvara alla frågor.');return}
-score+=Number(a.value);
+
+let answers=[];
+let total=0;
+
+for(let i=0;i<questions.length;i++){
+
+let selected=document.querySelector('input[name="m'+i+'"]:checked');
+
+if(!selected){
+alert('Besvara alla frågor innan du fortsätter.');
+return;
 }
-finish('Mående och välbefinnande',score,15,'Dina svar har sammanställts. Denna egenkonstruerade enkät har ingen klinisk poänggräns.');
+
+let value=Number(selected.value);
+total+=value;
+
+answers.push({
+question:questions[i],
+answer:options[value]
+});
+}
+
+saveResult('Mående och välbefinnande',total,24,
+answers.map(a=>a.question+' '+a.answer));
+
+content.innerHTML=
+'<h3>Dina svar</h3>'+
+answers.map((a,i)=>
+'<div class="answer-card">'+
+'<b>'+(i+1)+'. '+a.question+'</b>'+
+'<p>Ditt svar: '+a.answer+'</p>'+
+'</div>'
+).join('');
+
+result.innerHTML=
+'<div class="result">'+
+'<h3>Sammanställning klar</h3>'+
+'<p>Du har besvarat alla åtta frågor.</p>'+
+'<p>Det finns ingen diagnostisk poänggräns för detta egenkonstruerade formulär.</p>'+
+'<p>Resultatet är inte en diagnos eller medicinsk bedömning.</p>'+
+'<button onclick="window.print()">Skriv ut rapport</button> '+
+'<button onclick="closeTest()">Tillbaka till testerna</button>'+
+'</div>';
 };
 }
 
+// RESULTATHISTORIK
+
 function showHistory(){
-if(!begin('Tidigare övningsresultat'))return;
+
+if(!begin('Resultat och rapporter'))return;
+
 if(history.length===0){
-content.innerHTML='<p>Du har ännu inte genomfört några övningar.</p>';
+content.innerHTML='<p>Det finns inga genomförda tester i denna session ännu.</p>';
 return;
 }
-content.innerHTML=history.map(x=>'<div class="question"><b>'+x.name+'</b><p>'+x.score+' av '+x.total+' poäng</p></div>').join('');
+
+content.innerHTML=
+'<p>Genomförda övningar: '+history.length+'</p>'+
+history.map((h,i)=>
+'<div class="answer-card">'+
+'<h3>'+(i+1)+'. '+h.name+'</h3>'+
+'<p>Åldersgrupp: '+h.age+'</p>'+
+'<p>Resultat: <b>'+h.score+' / '+h.total+'</b></p>'+
+'<p>Datum: '+h.date+'</p>'+
+'</div>'
+).join('');
+
+result.innerHTML=
+'<div class="result">'+
+'<h3>Samlad testsession</h3>'+
+'<p>Antal genomförda övningar: '+history.length+'</p>'+
+'<button onclick="window.print()">Skriv ut sammanställning</button> '+
+'<button onclick="closeTest()">Tillbaka</button>'+
+'</div>';
 }
+
 </script>
 </body>
 </html>
