@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173b68">
+<title>PsykologTest Sverige</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fb;color:#24334a;font-family:Arial,sans-serif}
+header{background:#173b68;color:white;padding:25px 18px}
+header h1{margin:0;font-size:25px}
+header p{margin:8px 0 0;color:#dce8f6}
+main{max-width:850px;margin:25px auto;padding:0 15px}
+.welcome,.panel,.test{background:white;padding:22px;border-radius:15px;margin-bottom:18px;box-shadow:0 3px 14px #18365a12}
+h2{color:#173b68;margin-top:0}
+h3{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.test{margin:0;border:1px solid #e5eaf1;box-shadow:none}
+.test p{color:#64748b;line-height:1.5}
+button,select{font-size:16px;border-radius:9px;padding:12px 16px}
+button{background:#245b96;color:white;border:0;cursor:pointer}
+button:hover{background:#173b68}
+button.secondary{background:#e8eef6;color:#173b68}
+button:disabled{opacity:.5}
+label{display:block;margin:14px 0}
+input[type=radio]{margin-right:9px}
+input[type=text],select{width:100%;border:1px solid #ccd6e3;background:white}
+.question{padding:14px 0;border-bottom:1px solid #edf0f5}
+.question p{font-weight:bold}
+.result{background:#eaf3ff;padding:18px;border-radius:12px;margin-top:15px}
+.hidden{display:none}
+footer{text-align:center;padding:25px;color:#718096;font-size:13px}
+.badge{display:inline-block;background:#e7effa;color:#245b96;padding:5px 10px;border-radius:20px;font-size:12px}
+.big{font-size:30px;font-weight:bold;color:#173b68}
+#puzzle{font-size:34px;text-align:center;letter-spacing:10px;padding:25px}
+</style>
+</head>
+<body>
+<header>
+<h1>🧠 PsykologTest Sverige</h1>
+<p>Digitala psykologiska och kognitiva test</p>
+</header>
+<main>
+<section class="welcome">
+<span class="badge">Barn • Ungdomar • Vuxna</span>
+<h2>Välkommen</h2>
+<p>Här kan du genomföra olika övningar och frågeformulär. Resultaten sammanställs när du är klar.</p>
+<label>Åldersgrupp
+<select id="age">
+<option value="">Välj åldersgrupp</option>
+<option>Barn</option>
+<option>Ungdom</option>
+<option>Vuxen</option>
+</select>
+</label>
+</section>
+
+<section class="panel">
+<h2>Välj ett test</h2>
+<div class="grid">
+<div class="test">
+<h3>🧩 Logik och mönster</h3>
+<p>Hitta rätt figur och träna logiskt tänkande.</p>
+<button onclick="startPuzzle()">Starta test</button>
+</div>
+<div class="test">
+<h3>🧠 Minnestest</h3>
+<p>Träna på att komma ihåg siffror och ord.</p>
+<button onclick="startMemory()">Starta test</button>
+</div>
+<div class="test">
+<h3>💭 Mående och välbefinnande</h3>
+<p>Frågor om känslor och hur du har mått.</p>
+<button onclick="startMood()">Starta test</button>
+</div>
+</div>
+</section>
+
+<section class="panel hidden" id="work">
+<h2 id="testTitle">Test</h2>
+<div id="testContent"></div>
+<div id="testResult"></div>
+</section>
+
+<section class="panel">
+<h2>Om resultaten</h2>
+<p>Poäng från övningarna visar hur det gick på just dessa uppgifter. De är inte IQ-resultat, medicinska bedömningar eller diagnoser.</p>
+</section>
+</main>
+<footer>
+PsykologTest Sverige · Demonstrationsversion<br>
+Använd inte för kliniska beslut eller riktiga patientbedömningar.
+</footer>
+
+<script>
+const work=document.getElementById('work');
+const content=document.getElementById('testContent');
+const result=document.getElementById('testResult');
+const title=document.getElementById('testTitle');
+
+function show(name){
+if(!document.getElementById('age').value){
+alert('Välj först en åldersgrupp.');
+return false;
+}
+work.classList.remove('hidden');
+title.textContent=name;
+content.innerHTML='';
+result.innerHTML='';
+work.scrollIntoView({behavior:'smooth'});
+return true;
+}
+
+function finish(points,total,description){
+content.innerHTML='';
+result.innerHTML='<div class="result"><h3>Testet är klart!</h3><div class="big">'+points+' / '+total+'</div><p>'+description+'</p><p>Detta är ett övningsresultat och inte en klinisk bedömning.</p><button class="secondary" onclick="resetTest()">Tillbaka till testerna</button></div>';
+}
+
+function resetTest(){
+work.classList.add('hidden');
+}
+
+function startPuzzle(){
+if(!show('Logik och mönster'))return;
+let questions=[
+{q:'Vilken siffra kommer härnäst?',pattern:'2 – 4 – 6 – 8 – ?',opts:['9','10','12'],a:'10'},
+{q:'Vilken figur skiljer sig från de andra?',pattern:'○  ○  △  ○',opts:['Första','Andra','Tredje'],a:'Tredje'},
+{q:'Vilken siffra kommer härnäst?',pattern:'5 – 10 – 15 – 20 – ?',opts:['22','25','30'],a:'25'}
+];
+let i=0,score=0;
+function draw(){
+let q=questions[i];
+content.innerHTML='<p>Fråga '+(i+1)+' av '+questions.length+'</p><h3>'+q.q+'</h3><div id="puzzle">'+q.pattern+'</div>'+q.opts.map(x=>'<label><input type="radio" name="ans" value="'+x+'">'+x+'</label>').join('')+'<button onclick="next()">Nästa</button>';
+}
+window.next=function(){
+let a=document.querySelector('input[name=ans]:checked');
+if(!a){alert('Välj ett svar.');return;}
+if(a.value===questions[i].a)score++;
+i++;
+if(i<questions.length)draw();
+else finish(score,questions.length,'Du svarade rätt på '+score+' av '+questions.length+' frågor.');
+};
+draw();
+}
+
+function startMemory(){
+if(!show('Minnestest'))return;
+let number=String(Math.floor(10000+Math.random()*89999));
+content.innerHTML='<p>Memorera följande siffra. Den visas en kort stund.</p><div class="big" id="memoryNumber">'+number+'</div><p id="memoryMessage">Försök komma ihåg siffrorna.</p>';
+setTimeout(()=>{
+document.getElementById('memoryNumber').textContent='? ? ? ? ?';
+document.getElementById('memoryMessage').innerHTML='Skriv siffran du såg: <input type="text" id="memoryAnswer" inputmode="numeric" maxlength="5"><br><br><button onclick="checkMemory()">Kontrollera svar</button>';
+},5000);
+window.checkMemory=function(){
+let answer=document.getElementById('memoryAnswer').value;
+finish(answer===number?1:0,1,answer===number?'Du kom ihåg hela sifferserien!':'Sifferserien stämde inte. Rätt svar var '+number+'.');
+};
+}
+
+function startMood(){
+if(!show('Mående och välbefinnande'))return;
+let qs=[
+'Hur ofta har du känt dig stressad?',
+'Hur ofta har du haft svårt att koppla av?',
+'Hur ofta har du känt dig nedstämd?',
+'Hur ofta har du känt dig orolig?'
+];
+content.innerHTML=qs.map((q,i)=>'<div class="question"><p>'+(i+1)+'. '+q+'</p>'+['Aldrig','Ibland','Ofta','Nästan alltid'].map((a,j)=>'<label><input type="radio" name="m'+i+'" value="'+j+'">'+a+'</label>').join('')+'</div>').join('')+'<button onclick="submitMood()">Visa sammanställning</button>';
+window.submitMood=function(){
+let score=0;
+for(let i=0;i<qs.length;i++){
+let a=document.querySelector('input[name=m'+i+']:checked');
+if(!a){alert('Besvara alla frågor först.');return;}
+score+=Number(a.value);
+}
+finish(score,12,'Dina svar är sammanställda. Poängen har ingen validerad klinisk gräns och kan inte användas för diagnos.');
+};
+}
+</script>
+</body>
+</html>
